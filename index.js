@@ -125,7 +125,8 @@ async function playVideo(filePath, fileName, isGif = false) {
     ffmpeg.kill();
   };
   const onKey = (key) => {
-    if (key === 'q' || key === '\u0003' || key === '\u001b') stop();
+    const pressedKey = key.toLowerCase();
+    if (pressedKey === 'q' || key === '\u0003' || key === '\u001b') stop();
   };
 
   process.stdin.setRawMode?.(true);
@@ -224,6 +225,8 @@ async function main() {
     console.clear();
     const selectedPath = path.join(PHOTOS_DIR, selectedMedia.name);
     if (selectedMedia.type === 'video') {
+      // Stop readline from consuming q before the video key handler sees it.
+      rl.close();
       await playVideo(selectedPath, selectedMedia.name, path.extname(selectedMedia.name).toLowerCase() === '.gif');
     } else {
       console.log(`\x1b[36m${selectedMedia.name}\x1b[0m\n`);
