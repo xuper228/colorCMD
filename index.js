@@ -183,8 +183,7 @@ async function main() {
     const media = await getMedia();
     if (media.length === 0) {
       console.log(`There are no media files in ${path.relative(process.cwd(), PHOTOS_DIR) || 'photos'}.`);
-      console.log('Add an image or video there, then run the program again.');
-      return;
+      console.log('You can still open an animated GIF from a URL below.\n');
     }
 
     console.log('Choose a file:\n');

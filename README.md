@@ -5,7 +5,7 @@ A Node.js terminal viewer for images, animated GIFs, and videos from the `photos
 ## Run
 
 1. Install Node.js 18 or newer.
-2. Put images (`.jpg`, `.jpeg`, `.png`, `.webp`, `.tif`, `.tiff`) or animated GIFs/videos (`.gif`, `.mp4`, `.mov`, `.mkv`, `.avi`, `.webm`, `.m4v`, `.flv`) in the `photos` folder.
+2. Optionally put images (`.jpg`, `.jpeg`, `.png`, `.webp`, `.tif`, `.tiff`) or animated GIFs/videos (`.gif`, `.mp4`, `.mov`, `.mkv`, `.avi`, `.webm`, `.m4v`, `.flv`) in the `photos` folder. The folder can also be empty if you want to use a GIF URL.
 3. Run these commands from the project folder:
 
 ```bash
