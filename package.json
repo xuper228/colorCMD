@@ -1,0 +1,17 @@
+{
+  "name": "color-ascii-viewer",
+  "version": "1.0.0",
+  "description": "Interactive terminal viewer for colored ASCII versions of images and videos",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "sharp": "^0.33.5"
+  }
+}
