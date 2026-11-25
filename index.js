@@ -122,11 +122,15 @@ async function playVideo(filePath, fileName, isGif = false) {
   const stop = () => {
     if (stopped) return;
     stopped = true;
-    ffmpeg.kill();
+    // Stop the decoder and close its streams immediately so q never gets stuck
+    // behind buffered video frames.
+    ffmpeg.stdout.destroy();
+    ffmpeg.stderr.destroy();
+    ffmpeg.kill('SIGKILL');
   };
   const onKey = (key) => {
-    const pressedKey = key.toLowerCase();
-    if (pressedKey === 'q' || key === '\u0003' || key === '\u001b') stop();
+    const pressedKey = String(key).toLowerCase();
+    if (pressedKey.includes('q') || pressedKey.includes('й') || key === '\u0003' || key === '\u001b') stop();
   };
 
   process.stdin.setRawMode?.(true);
@@ -167,10 +171,14 @@ async function playVideo(filePath, fileName, isGif = false) {
     if (ffmpeg.exitCode !== 0 && !stopped) {
       throw new Error(ffmpegError || 'FFmpeg could not read this video.');
     }
+  } catch (error) {
+    // Destroying the stream is expected when the user presses q.
+    if (!stopped) throw error;
   } finally {
     stop();
     process.stdin.off('data', onKey);
     process.stdin.setRawMode?.(false);
+    process.stdin.pause();
     process.stdout.write('\x1b[?25h\x1b[0m\n');
   }
 }
